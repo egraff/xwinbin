@@ -27,7 +27,6 @@ endif()
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Asan,Debug>:Debug>DLL")
 
 add_subdirectory(src libxwinbin)
-add_subdirectory(example example)
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND BUILD_TESTING)
     add_subdirectory(tests)
