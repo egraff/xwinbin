@@ -281,7 +281,7 @@ read_section_header(const uint8_t *srcbuf, size_t off_limit, size_t *off, struct
 static void
 zero_out_section_header(struct pe_section_header *hdr)
 {
-    struct pe_section_header zero_hdr = { { 0 }, };
+    struct pe_section_header zero_hdr = { { 0 }, 0 };
     *hdr = zero_hdr;
 }
 
