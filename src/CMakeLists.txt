@@ -4,8 +4,8 @@ set(libxwinbin_src_files
     pe_headers_parser.c
 )
 
-set(libxwinbin_public_header_files
-    "${PROJECT_SOURCE_DIR}/include/xwinbin/xwinbin.h"
+file(GLOB libxwinbin_public_header_files
+    "${PROJECT_SOURCE_DIR}/include/xwinbin/*.h"
 )
 
 add_library(xwinbin STATIC ${libxwinbin_src_files})
