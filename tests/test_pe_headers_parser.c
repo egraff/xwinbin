@@ -726,7 +726,7 @@ test_valid_pe64_mingw_exe_image__all_headers(void)
     assert(hinfo.pmi_optional_header.poh_base_of_data == 0);
 
     /* Optional header - Windows-specific fields */
-    assert(hinfo.pmi_optional_header.poh_image_base == 0x0000000000400000);
+    assert(hinfo.pmi_optional_header.poh_image_base == 0x0000000000400000ULL);
     assert(hinfo.pmi_optional_header.poh_section_alignment == 4096);
     assert(hinfo.pmi_optional_header.poh_file_alignment == 512);
     assert(hinfo.pmi_optional_header.poh_os_version_major == 4);
@@ -1164,7 +1164,7 @@ test_valid_pe64_msvc_exe_image__all_headers(void)
     assert(hinfo.pmi_optional_header.poh_base_of_data == 0);
 
     /* Optional header - Windows-specific fields */
-    assert(hinfo.pmi_optional_header.poh_image_base == 0x0000000140000000);
+    assert(hinfo.pmi_optional_header.poh_image_base == 0x0000000140000000ULL);
     assert(hinfo.pmi_optional_header.poh_section_alignment == 4096);
     assert(hinfo.pmi_optional_header.poh_file_alignment == 512);
     assert(hinfo.pmi_optional_header.poh_os_version_major == 6);
