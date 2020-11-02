@@ -15,6 +15,9 @@ RUN \
   apt-get install -y libc6-dev-i386 build-essential libssl-dev && \
   apt-get install -y g++-5-multilib g++-6-multilib g++-7-multilib g++-8-multilib && \
   apt-get install -y g++-5 g++-6 g++-7 g++-8 && \
+  apt-get install -y g++-5-aarch64-linux-gnu g++-6-aarch64-linux-gnu g++-7-aarch64-linux-gnu g++-8-aarch64-linux-gnu && \
+  apt-get install -y g++-5-mips64-linux-gnuabi64 g++-6-mips64-linux-gnuabi64 g++-7-mips64-linux-gnuabi64 g++-8-mips64-linux-gnuabi64 && \
+  apt-get install -y g++-5-powerpc64-linux-gnuabi64 g++-6-powerpc64-linux-gnuabi64 g++-7-powerpc64-linux-gnuabi64 g++-8-powerpc64-linux-gnuabi64 && \
   apt-get install -y clang-5.0 clang-6.0 clang-7 clang-8 clang-9
 
 RUN \

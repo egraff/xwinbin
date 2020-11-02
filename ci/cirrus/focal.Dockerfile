@@ -12,6 +12,9 @@ RUN \
   apt-get install -y libc6-dev-i386 build-essential libssl-dev && \
   apt-get install -y g++-9-multilib g++-10-multilib && \
   apt-get install -y g++-9 g++-10 && \
+  apt-get install -y g++-9-aarch64-linux-gnu g++-10-aarch64-linux-gnu && \
+  apt-get install -y g++-9-mips64-linux-gnuabi64 g++-10-mips64-linux-gnuabi64 && \
+  apt-get install -y g++-9-powerpc64-linux-gnuabi64 g++-10-powerpc64-linux-gnuabi64 && \
   apt-get install -y clang-10 clang-11
 
 RUN \

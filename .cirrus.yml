@@ -1,3 +1,8 @@
+env:
+  BUILD_DIR: ${CIRRUS_WORKING_DIR}/../.cmake-build
+  INSTALL_DIR: ${CIRRUS_WORKING_DIR}/../.cmake-install
+
+
 task:
   matrix:
     - name: "x86, linux, gcc 4.4"
@@ -186,6 +191,23 @@ task:
       env:
         CC: gcc-10
         CXX: g++-10
+
+    - name: "x86, linux, clang 3.4"
+      container:
+        dockerfile: ci/cirrus/trusty.Dockerfile
+      env:
+        CC: clang-3.4
+        CXX: clang++-3.4
+        CFLAGS: -m32
+        CXXFLAGS: -m32
+        LDFLAGS: -m32
+
+    - name: "x64, linux, clang 3.4"
+      container:
+        dockerfile: ci/cirrus/trusty.Dockerfile
+      env:
+        CC: clang-3.4
+        CXX: clang++-3.4
 
     - name: "x86, linux, clang 3.5"
       container:
@@ -408,8 +430,163 @@ task:
         CC: clang-11
         CXX: clang++-11
 
-  script:
+  build_script:
+    - mkdir -p $BUILD_DIR
+    - mkdir -p $INSTALL_DIR
+    - cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR -S . -B $BUILD_DIR
+    - cmake --build $BUILD_DIR --target install
+
+  test_script:
+    - cmake --build $BUILD_DIR --target test
+
+
+
+cross_build_task:
+  matrix:
+    - name: "arm64, linux, gcc 4.8"
+      container:
+        dockerfile: ci/cirrus/xenial.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-gcc
+        CROSS_SUFFIX: "-4.8"
+
+    - name: "arm64, linux, gcc 4.9"
+      container:
+        dockerfile: ci/cirrus/xenial.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-gcc
+        CROSS_SUFFIX: "-4.9"
+
+    - name: "arm64, linux, gcc 5"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-gcc
+        CROSS_SUFFIX: "-5"
+
+    - name: "arm64, linux, gcc 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-gcc
+        CROSS_SUFFIX: "-10"
+
+    - name: "arm64, linux, clang 3.4"
+      container:
+        dockerfile: ci/cirrus/trusty.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-clang
+        CROSS_SUFFIX: "-3.4"
+
+    - name: "arm64, linux, clang 4.0"
+      container:
+        dockerfile: ci/cirrus/xenial.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-clang
+        CROSS_SUFFIX: "-4.0"
+
+    - name: "arm64, linux, clang 5.0"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-clang
+        CROSS_SUFFIX: "-5.0"
+
+    - name: "arm64, linux, clang 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: arm64-linux-clang
+        CROSS_SUFFIX: "-10"
+
+    - name: "mips64, linux, gcc 5"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-gcc
+        CROSS_SUFFIX: "-5"
+
+    - name: "mips64, linux, gcc 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-gcc
+        CROSS_SUFFIX: "-10"
+
+    - name: "mips64, linux, clang 3.4"
+      container:
+        dockerfile: ci/cirrus/trusty.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-clang
+        CROSS_SUFFIX: "-3.4"
+
+    - name: "mips64, linux, clang 4.0"
+      container:
+        dockerfile: ci/cirrus/xenial.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-clang
+        CROSS_SUFFIX: "-4.0"
+
+    - name: "mips64, linux, clang 5.0"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-clang
+        CROSS_SUFFIX: "-5.0"
+
+    - name: "mips64, linux, clang 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: mips64-linux-clang
+        CROSS_SUFFIX: "-10"
+
+    - name: "powerpc64, linux, gcc 5"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-gcc
+        CROSS_SUFFIX: "-5"
+
+    - name: "powerpc64, linux, gcc 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-gcc
+        CROSS_SUFFIX: "-10"
+
+    - name: "powerpc64, linux, clang 3.4"
+      container:
+        dockerfile: ci/cirrus/trusty.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-clang
+        CROSS_SUFFIX: "-3.4"
+
+    - name: "powerpc64, linux, clang 4.0"
+      container:
+        dockerfile: ci/cirrus/xenial.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-clang
+        CROSS_SUFFIX: "-4.0"
+
+    - name: "powerpc64, linux, clang 5.0"
+      container:
+        dockerfile: ci/cirrus/bionic.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-clang
+        CROSS_SUFFIX: "-5.0"
+
+    - name: "powerpc64, linux, clang 10"
+      container:
+        dockerfile: ci/cirrus/focal.Dockerfile
+      env:
+        TOOLCHAIN: powerpc64-linux-clang
+        CROSS_SUFFIX: "-10"
+
+  build_script:
+    - mkdir -p $BUILD_DIR
+    - mkdir -p $INSTALL_DIR
     - mkdir -p build
     - cd build
-    - cmake -DCMAKE_INSTALL_PREFIX:PATH=../install ..
-    - cmake --build . --target install
+    - cmake -DCMAKE_TOOLCHAIN_FILE:PATH=cmake/${TOOLCHAIN}.toolchain.cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR -S . -B $BUILD_DIR
+    - cmake --build $BUILD_DIR --target install
