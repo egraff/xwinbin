@@ -586,7 +586,5 @@ cross_build_task:
   build_script:
     - mkdir -p $BUILD_DIR
     - mkdir -p $INSTALL_DIR
-    - mkdir -p build
-    - cd build
     - cmake -DCMAKE_TOOLCHAIN_FILE:PATH=cmake/${TOOLCHAIN}.toolchain.cmake -DCMAKE_INSTALL_PREFIX:PATH=$INSTALL_DIR -S . -B $BUILD_DIR
     - cmake --build $BUILD_DIR --target install
