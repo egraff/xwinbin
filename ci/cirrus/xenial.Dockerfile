@@ -14,7 +14,6 @@ RUN \
   apt-get install -y g++-4.7-multilib g++-4.8-multilib g++-4.9-multilib && \
   apt-get install -y g++-4.7 g++-4.8 g++-4.9 && \
   apt-get install -y g++-4.8-aarch64-linux-gnu g++-4.9-aarch64-linux-gnu && \
-  apt-get install -y g++-4.8-powerpc64-linux-gnu g++-4.9-powerpc64-linux-gnu && \
   apt-get install -y clang-3.8 clang-3.9 clang-4.0
 
 RUN \
