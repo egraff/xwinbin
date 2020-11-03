@@ -15,7 +15,7 @@ RUN \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt.asc && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh && \
-  gpg --no-default-keyring --keyring ./2D2CEF1034921684.gpg --verify cmake-3.18.4-SHA-256.txt.asc cmake-3.18.4-SHA-256.txt && \
+  gpgv --keyring ./2D2CEF1034921684.gpg cmake-3.18.4-SHA-256.txt.asc cmake-3.18.4-SHA-256.txt && \
   sha256sum --ignore-missing --check cmake-3.18.4-SHA-256.txt && \
   chmod +x cmake-3.18.4-Linux-x86_64.sh && \
   cd /usr/local && \
