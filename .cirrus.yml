@@ -471,13 +471,6 @@ cross_build_task:
         TOOLCHAIN: arm64-linux-gcc
         CROSS_SUFFIX: "-10"
 
-    - name: "arm64, linux, clang 3.4"
-      container:
-        dockerfile: ci/cirrus/trusty.Dockerfile
-      env:
-        TOOLCHAIN: arm64-linux-clang
-        CROSS_SUFFIX: "-3.4"
-
     - name: "arm64, linux, clang 4.0"
       container:
         dockerfile: ci/cirrus/xenial.Dockerfile
@@ -513,13 +506,6 @@ cross_build_task:
         TOOLCHAIN: mips64-linux-gcc
         CROSS_SUFFIX: "-10"
 
-    - name: "mips64, linux, clang 3.4"
-      container:
-        dockerfile: ci/cirrus/trusty.Dockerfile
-      env:
-        TOOLCHAIN: mips64-linux-clang
-        CROSS_SUFFIX: "-3.4"
-
     - name: "mips64, linux, clang 4.0"
       container:
         dockerfile: ci/cirrus/xenial.Dockerfile
@@ -554,13 +540,6 @@ cross_build_task:
       env:
         TOOLCHAIN: powerpc64-linux-gcc
         CROSS_SUFFIX: "-10"
-
-    - name: "powerpc64, linux, clang 3.4"
-      container:
-        dockerfile: ci/cirrus/trusty.Dockerfile
-      env:
-        TOOLCHAIN: powerpc64-linux-clang
-        CROSS_SUFFIX: "-3.4"
 
     - name: "powerpc64, linux, clang 4.0"
       container:
