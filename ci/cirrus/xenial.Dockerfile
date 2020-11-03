@@ -1,4 +1,5 @@
 FROM ubuntu:xenial
+WORKDIR /root
 
 RUN \
   apt-get update && \
@@ -7,11 +8,11 @@ RUN \
 RUN \
   apt-get install -y libc6-dev-i386 build-essential libssl-dev g++ g++-multilib
 
-RUN cd ~ && mkdir cmake-tmp
-COPY ci/cirrus/*.gpg ~/cmake-tmp/
+RUN mkdir -p /root/cmake-tmp
+COPY ci/cirrus/*.gpg /root/cmake-tmp/
 
 RUN \
-  cd ~/cmake-tmp && \
+  cd /root/cmake-tmp && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt.asc && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh && \
@@ -19,8 +20,8 @@ RUN \
   sha256sum --ignore-missing --check cmake-3.18.4-SHA-256.txt && \
   chmod +x cmake-3.18.4-Linux-x86_64.sh && \
   cd /usr/local && \
-  printf 'y\nn\n' | ~/cmake-tmp/cmake-3.18.4-Linux-x86_64.sh && \
-  cd ~ && \
+  printf 'y\nn\n' | /root/cmake-tmp/cmake-3.18.4-Linux-x86_64.sh && \
+  cd /root && \
   rm -rf cmake-tmp
 
 RUN \
