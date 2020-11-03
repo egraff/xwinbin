@@ -7,16 +7,15 @@ RUN \
 RUN \
   apt-get install -y libc6-dev-i386 build-essential libssl-dev g++ g++-multilib
 
+RUN cd ~ && mkdir cmake-tmp
+COPY ci/cirrus/*.gpg ~/cmake-tmp
+
 RUN \
-  cd ~ && \
-  mkdir cmake-tmp && \
-  cd cmake-tmp && \
-  gpg --keyserver pool.sks-keyservers.net --recv-keys C6C265324BBEBDC350B513D02D2CEF1034921684 && \
-  gpg --export C6C265324BBEBDC350B513D02D2CEF1034921684 > ./C6C265324BBEBDC350B513D02D2CEF1034921684.gpg && \
+  cd ~/cmake-tmp && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt.asc && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh && \
-  gpg --no-default-keyring --keyring ./C6C265324BBEBDC350B513D02D2CEF1034921684.gpg --verify cmake-3.18.4-SHA-256.txt.asc cmake-3.18.4-SHA-256.txt && \
+  gpg --no-default-keyring --keyring ./2D2CEF1034921684.gpg --verify cmake-3.18.4-SHA-256.txt.asc cmake-3.18.4-SHA-256.txt && \
   sha256sum --ignore-missing --check cmake-3.18.4-SHA-256.txt && \
   chmod +x cmake-3.18.4-Linux-x86_64.sh && \
   cd /usr/local && \
@@ -37,4 +36,4 @@ RUN \
   apt-get install -y clang-10 clang-11
 
 RUN \
-  apt-get install qemu qemu-utils qemu-user qemu-user-static binfmt-support
+  apt-get install -y qemu qemu-utils qemu-user qemu-user-static binfmt-support
