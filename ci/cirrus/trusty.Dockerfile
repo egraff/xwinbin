@@ -6,7 +6,7 @@ RUN \
   apt-get install -y wget software-properties-common
 
 RUN \
-  apt-get install -y libc6-dev-i386 build-essential libssl-dev g++ g++-multilib
+  apt-get install -y libc6-dev-i386 build-essential libssl-dev
 
 RUN mkdir -p /root/cmake-tmp
 COPY ci/cirrus/*.gpg /root/cmake-tmp/
@@ -17,7 +17,8 @@ RUN \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-SHA-256.txt.asc && \
   wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4-Linux-x86_64.sh && \
   gpgv --keyring ./2D2CEF1034921684.gpg cmake-3.18.4-SHA-256.txt.asc cmake-3.18.4-SHA-256.txt && \
-  sha256sum --ignore-missing --check cmake-3.18.4-SHA-256.txt && \
+  cat cmake-3.18.4-SHA-256.txt | grep "cmake-3.18.4-Linux-x86_64.sh" > cmake-SHA-256.txt && \
+  sha256sum --check cmake-SHA-256.txt && \
   chmod +x cmake-3.18.4-Linux-x86_64.sh && \
   cd /usr/local && \
   printf 'y\nn\n' | /root/cmake-tmp/cmake-3.18.4-Linux-x86_64.sh && \

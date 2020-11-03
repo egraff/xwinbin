@@ -6,7 +6,7 @@ RUN \
   apt-get install -y wget software-properties-common
 
 RUN \
-  apt-get install -y libc6-dev-i386 build-essential libssl-dev g++ g++-multilib
+  apt-get install -y libc6-dev-i386 build-essential libssl-dev
 
 RUN mkdir -p /root/cmake-tmp
 COPY ci/cirrus/*.gpg /root/cmake-tmp/
