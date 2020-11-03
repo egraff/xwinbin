@@ -8,7 +8,7 @@ RUN \
   apt-get install -y libc6-dev-i386 build-essential libssl-dev g++ g++-multilib
 
 RUN cd ~ && mkdir cmake-tmp
-COPY ci/cirrus/*.gpg ~/cmake-tmp
+COPY ci/cirrus/*.gpg ~/cmake-tmp/
 
 RUN \
   cd ~/cmake-tmp && \
